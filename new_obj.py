@@ -3,20 +3,47 @@ def create_new_object(process1, process2):
         "CNPJ": "",
         "Processos": [
             {
-                "NumeroProcesso": process1["NumeroProcesso"],
-                "NeoWay": process1["NeoWay"],
-                "BigDataCorp": process2["BigDataCorp"]
+                "NumeroProcesso": "",
+                "NeoWay": "",
+                "BigDataCorp": ""
             },
             {
-                "NumeroProcesso": process2["NumeroProcesso"],
-                "NeoWay": process2["NeoWay"],
-                "BigDataCorp": process2["BigDataCorp"]
+                "NumeroProcesso": "",
+                "NeoWay": "",
+                "BigDataCorp": ""
             }
         ],
-        "QtdNeoway": 1,
-        "QtdBigDataCorp": 2,
-        "QtdBigDataCorpSemNeoWay": 1,
-        "QtdNeoWaySemBigDataCorp": 0
+        "QtdBigDataCorp": "",
+        "QtdNeoway": "",
+
+        "QtdBigDataCorpSemNeoWay": "",
+        "QtdNeoWaySemBigDataCorp": ""
+
     }
+    # ADD CNPJ
+    if "CNPJ" in process1 == "CNPJ" in process2:
+        new_object["CNPJ"] = process1["CNPJ"] + process2["CNPJ"]
+    elif "CNPJ" in process1:
+        new_object["CNPJ"] = process1["CNPJ"]
+    elif "CNPJ" in process2:
+        new_object["CNPJ"] = process2["CNPJ"]
+
+    # ADD QUANTIDADE DE CADA DB
+    if "Result" in process1:
+        new_object["QtdBigDataCorp"] = process1["Result"][0]["Lawsuits"]["TotalLawsuits"]
+    if "results" in process2:
+        new_object["QtdNeoway"] = process2["total"]
+
+    # ADD PROCESS
+    for i, process in enumerate([process1, process2]):
+        if "Result" in process:
+            for lawsuit in process["Result"][0]["Lawsuits"]["Lawsuits"]:
+                new_object["Processos"][i]["NumeroProcesso"] = lawsuit["Number"]
+        if "results" in process:
+            for result in process["results"]:
+                new_object["Processos"][i]["NumeroProcesso"] = result["processo"]
+
     return new_object
 
+    # 10548862520208110041
+    # 10548862520208110041

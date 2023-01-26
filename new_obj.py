@@ -1,16 +1,16 @@
 def create_new_object(process1, process2):
-    count_big = 0
-    count_neo = 0
+    count_ambos = 0
     new_object = {
         "CNPJ": "",
         "Processos": [],
         "QtdBigDataCorp": "",
         "QtdNeoway": "",
         "QtdBigDataCorpSemNeoWay": "",
-        "QtdNeoWaySemBigDataCorp": ""
+        "QtdNeoWaySemBigDataCorp": "",
+        "QtdAmbos": ""
 
     }
-    # ADD CNPJ
+
     if "CNPJ" in process1 == "CNPJ" in process2:
         new_object["CNPJ"] = process1["CNPJ"] + process2["CNPJ"]
     elif "CNPJ" in process1:
@@ -18,7 +18,6 @@ def create_new_object(process1, process2):
     elif "CNPJ" in process2:
         new_object["CNPJ"] = process2["CNPJ"]
 
-    # ADD PROCESS
     process_numbers = []
     for process in [process1, process2]:
         if "Result" in process:
@@ -45,13 +44,17 @@ def create_new_object(process1, process2):
                         if item["NumeroProcesso"] == result["processo"]:
                             item["NeoWay"] = True
 
-    # ADD QUANTIDADE DE CADA DB
-    for processo in new_object["Processos"]:
-        if processo["BigDataCorp"]:
-            count_big += 1
-        if processo["NeoWay"]:
-            count_neo += 1
-    new_object["QtdBigDataCorp"] = count_big
-    new_object["QtdNeoway"] = count_neo
+    new_object["QtdBigDataCorp"] = 0
+    new_object["QtdNeoway"] = 0
+    for item in new_object["Processos"]:
+        if item["BigDataCorp"]:
+            new_object["QtdBigDataCorp"] += 1
+        if item["NeoWay"]:
+            new_object["QtdNeoway"] += 1
+        if item["BigDataCorp"] and item["NeoWay"]:
+            count_ambos += 1
+    new_object["QtdAmbos"] = count_ambos
+    new_object["QtdBigDataCorpSemNeoWay"] = new_object["QtdBigDataCorp"] - count_ambos
+    new_object["QtdNeoWaySemBigDataCorp"] = new_object["QtdNeoway"] - count_ambos
 
     return new_object

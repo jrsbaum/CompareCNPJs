@@ -22,13 +22,26 @@ def create_new_object(process1, process2):
     if "results" in process2:
         new_object["QtdNeoway"] = process2["total"]
 
-    # ADD PROCESS
-    for i, process in enumerate([process1, process2]):
+    process_numbers = []
+    for process in [process1, process2]:
         if "Result" in process:
             for lawsuit in process["Result"][0]["Lawsuits"]["Lawsuits"]:
-                new_object["Processos"].append({"NumeroProcesso": lawsuit["Number"]})
+                if lawsuit["Number"] not in process_numbers:
+                    process_numbers.append(lawsuit["Number"])
+                    new_object["Processos"].append(
+                        {"NumeroProcesso": lawsuit["Number"], "BigDataCorp": True, "NeoWay": False})
+                else:
+                    for item in new_object["Processos"]:
+                        if item["NumeroProcesso"] == lawsuit["Number"]:
+                            item["BigDataCorp"] = True
         if "results" in process:
             for result in process["results"]:
-                new_object["Processos"].append({"NumeroProcesso": result["processo"]})
-
+                if result["processo"] not in process_numbers:
+                    process_numbers.append(result["processo"])
+                    new_object["Processos"].append(
+                        {"NumeroProcesso": result["processo"], "BigDataCorp": False, "NeoWay": True})
+                else:
+                    for item in new_object["Processos"]:
+                        if item["NumeroProcesso"] == result["processo"]:
+                            item["NeoWay"] = True
     return new_object

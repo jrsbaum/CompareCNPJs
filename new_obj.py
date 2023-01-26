@@ -1,21 +1,9 @@
 def create_new_object(process1, process2):
     new_object = {
         "CNPJ": "",
-        "Processos": [
-            {
-                "NumeroProcesso": "",
-                "NeoWay": "",
-                "BigDataCorp": ""
-            },
-            {
-                "NumeroProcesso": "",
-                "NeoWay": "",
-                "BigDataCorp": ""
-            }
-        ],
+        "Processos": [],
         "QtdBigDataCorp": "",
         "QtdNeoway": "",
-
         "QtdBigDataCorpSemNeoWay": "",
         "QtdNeoWaySemBigDataCorp": ""
 
@@ -38,12 +26,9 @@ def create_new_object(process1, process2):
     for i, process in enumerate([process1, process2]):
         if "Result" in process:
             for lawsuit in process["Result"][0]["Lawsuits"]["Lawsuits"]:
-                new_object["Processos"][i]["NumeroProcesso"] = lawsuit["Number"]
+                new_object["Processos"].append({"NumeroProcesso": lawsuit["Number"]})
         if "results" in process:
             for result in process["results"]:
-                new_object["Processos"][i]["NumeroProcesso"] = result["processo"]
+                new_object["Processos"].append({"NumeroProcesso": result["processo"]})
 
     return new_object
-
-    # 10548862520208110041
-    # 10548862520208110041

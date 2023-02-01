@@ -22,3 +22,32 @@ NEW_COLLECTION_NAME = "collection_name3"
 ````
 
 #### Substitua os valores pelos valores a serem usados.
+
+
+## Task: Coletar dados de dois bancos de dados e uni-los em uma nova Collection
+
+Terá que ler dados de duas Collections diferentes e adicionar um novo Objeto a uma nova Collection.
+
+A primeira Collection fica em uma Database, chamado BigDataCorpProcesses, e a Collection se chama Processes.
+
+A segunda Collection fica em uma Database, chamado NeoWay, e a Collection se chama Processes.
+
+A partir dessas duas Collections, crie o novo objeto.
+Salve esse novo objeto em uma nova Database, chamada SummarizedProcesses, e a Collection irá se chamar Processes.
+
+Use a string connection fornecida anteriormente.
+Coloque a string connection, o nome das Databases e as Collections em um arquivo a parte
+chamado cfg.py que não será versionado.
+ 
+Para montar o novo objeto, o script verifica dentro das duas Collections o CNPJ. Se ele
+achar o mesmo CNPJ em ambas, ele adiciona esse CNPJ no início do objeto.
+
+Depois ele criará um objeto chamado Processos, onde conterá o número de cada processo, e um marcador mostrando se aquele processo existe dentro de cada Collection.
+
+Assim, o script busca por um Número do Processo, compara se são iguais e insere-o. Se ele existir dentro do banco daquele banco de dados, ele marca como True.
+
+Além disso, para cada vez que o número do processo existir naquela Collection, ele marca com +1 no campo QtdBigDataCorp ou QtdNeoWay, dependendo da Collection que ele foi encontrado.
+
+Também nesse novo objeto, temos os campos QtdBigDataCorpSemNeoWay, QtdNeoWaySemBigDataCorp e QtdAmbos.
+
+
